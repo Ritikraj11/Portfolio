@@ -9,7 +9,7 @@ import './TechStack.css';
 const techs = [
   { name: 'HTML5', icon: <FaHtml5 />, color: '#e34c26', level: 90 },
   { name: 'CSS3', icon: <FaCss3Alt />, color: '#264de4', level: 85 },
-  { name: 'JavaScript', icon: <FaJsSquare />, color: '#f0db4f', level: 50 },
+  { name: 'JavaScript', icon: <FaJsSquare />, color: '#f0db4f', level: 50},
   { name: 'React', icon: <FaReact />, color: '#61dafb', level: 75 },
   { name: 'Node.js', icon: <FaNodeJs />, color: '#68a063', level: 40 },
   { name: 'Git', icon: <FaGitAlt />, color: '#f1502f', level: 50 },
