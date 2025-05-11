@@ -13,7 +13,7 @@ const projects = [
     description: 'A responsive personal portfolio using React and modern CSS.',
     image: '/images/project2.png',
     liveLink: '#',
-    githubLink: 'https://github.com/yourname/portfolio'
+    githubLink: 'https://github.com/Ritikraj11/Portfolio'
   },
 //   {
 //     title: 'Chat App',
