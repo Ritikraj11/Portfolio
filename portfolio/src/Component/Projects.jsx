@@ -1,9 +1,11 @@
 import './Project.css';
+import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 const projects = [
   {
     title: 'Cultural Club Website',
-    description: 'A responsive Cultural Club using HTML,CSS and Javascript.',
+    description: 'A responsive Cultural Club website using HTML, CSS, and JavaScript.',
     image: '/images/project1.png',
     liveLink: 'https://gecm.vercel.app/',
     githubLink: '#'
@@ -15,39 +17,39 @@ const projects = [
     liveLink: '#',
     githubLink: 'https://github.com/Ritikraj11/Portfolio'
   },
-//   {
-//     title: 'Chat App',
-//     description: 'Realtime chat app built with Socket.io, Node.js, and React.',
-//     image: '/images/chat.png',
-//     liveLink: 'https://yourchatapp.live',
-//     githubLink: 'https://github.com/yourname/chat-app'
-//   },
-//   {
-//     title: 'Task Manager',
-//     description: 'A full-stack task management app using MERN stack.',
-//     image: '/images/task.png',
-//     liveLink: 'https://yourtaskmanager.live',
-//     githubLink: 'https://github.com/yourname/task-manager'
-//   }
 ];
 
 const Project = () => {
   return (
     <section className="projects-section">
-      <h2 className="section-title">Projects</h2>
+      <h2 className="section-title">My Projects</h2>
       <div className="projects-grid">
         {projects.map((project, idx) => (
-          <div className="project-card" key={idx}>
+          <motion.div
+            className="project-card"
+            key={idx}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: idx * 0.2 }}
+          >
             <img src={project.image} alt={project.title} className="project-img" />
             <div className="project-info">
               <h3>{project.title}</h3>
               <p>{project.description}</p>
               <div className="project-buttons">
-                <a href={project.liveLink} target="_blank" rel="noopener noreferrer">Live Demo</a>
-                <a href={project.githubLink} target="_blank" rel="noopener noreferrer">Code</a>
+                {project.liveLink !== '#' && (
+                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                    <FaExternalLinkAlt /> Live
+                  </a>
+                )}
+                {project.githubLink !== '#' && (
+                  <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                    <FaGithub /> Code
+                  </a>
+                )}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
