@@ -8,7 +8,7 @@ A modern and responsive **portfolio website** built with **React**. This website
 
 ## 🚀 Live Demo
 
-[Live Website]([https://portfolio-15hz6izl4-ritikraj11s-projects.vercel.app/])
+[Live Website](https://portfolio-15hz6izl4-ritikraj11s-projects.vercel.app/)
 
 ---
 
