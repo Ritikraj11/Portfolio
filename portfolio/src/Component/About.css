@@ -35,3 +35,32 @@
   border-radius: 50%;
   object-fit: cover;
 }
+/* Modern Button Styling for View Resume */
+.download-btn {
+  padding: 12px 30px;
+  background-color: #28a745; /* Green background */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.download-btn:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: translateY(-2px); /* Slightly lift the button */
+}
+
+.download-btn:focus {
+  outline: none; /* Remove focus outline */
+}
+
+.download-btn:active {
+  background-color: #1e7e34; /* Even darker green when clicked */
+  transform: translateY(1px); /* Button press effect */
+}

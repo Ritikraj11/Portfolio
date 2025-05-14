@@ -1,3 +1,5 @@
+import React from 'react';
+import './About.css'; // Assuming you have a CSS file for styling
 const About = () => {
   return (
     <section className="about-section" id="about">
@@ -10,6 +12,12 @@ const About = () => {
           <p>
             I thrive in collaborative environments and enjoy solving challenging problems. When I'm not coding, I love exploring new technologies, attending tech meetups, and contributing to open-source projects.
           </p>
+        </div>
+        {/* PDF view button */}
+        <div className="about-download">
+          <a href="/Ritik _Resume_OG.pdf" target="_blank" rel="noopener noreferrer">
+            <button className="download-btn">View Resume</button>
+          </a>
         </div>
       </div>
     </section>
