@@ -8,30 +8,26 @@ const Contact = require('./models/contact');
 
 const app = express();
 
-// ✅ Whitelist local and Vercel frontend
+// Whitelisted frontend domains (local + Vercel)
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app'
+  'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app',
 ];
 
-// ✅ CORS setup to handle undefined origins (e.g. Vercel SSR/proxy)
+// Logging incoming origin
 app.use((req, res, next) => {
-  console.log('🌐 Incoming Origin:', req.headers.origin);
+  console.log('🌐 Incoming Origin:', req.headers.origin || 'undefined');
   next();
 });
 
+// CORS setup
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) {
-      console.log('⚠️ No origin (likely same-origin or server-side)');
-      return callback(null, true);
-    }
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true); // SSR or direct request
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
-    } else {
-      console.log('❌ Blocked Origin:', origin);
-      return callback(new Error('Not allowed by CORS'));
     }
+    return callback(new Error('Not allowed by CORS'));
   },
   methods: ['GET', 'POST'],
   credentials: true
@@ -39,49 +35,46 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-// ✅ MongoDB connection
+// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => console.log('✅ Connected to MongoDB'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+})
+.then(() => console.log('✅ Connected to MongoDB'))
+.catch(err => console.error('❌ MongoDB connection error:', err));
 
-// ✅ POST: Save contact form
+// POST route to store contact
 app.post('/api/contact', async (req, res) => {
+  const { name, email, message } = req.body;
+  console.log('📩 Form received:', req.body);
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
   try {
-    const { name, email, message } = req.body;
-
-    console.log('📩 Contact form received:', { name, email, message }); // ✅ Add this
-
-    if (!name || !email || !message) {
-      console.log('❌ Missing fields');
-      return res.status(400).json({ error: 'All fields are required' });
-    }
-
     const contact = new Contact({ name, email, message });
     await contact.save();
-    console.log('✅ Saved to MongoDB');
-
-    res.status(200).json({ message: 'Contact form submitted successfully' });
+    console.log('✅ Saved to DB');
+    res.status(200).json({ message: 'Message received' });
   } catch (err) {
-    console.error('❌ Server error:', err);
+    console.error('❌ Save error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-
-// ✅ GET: Fetch all contacts
+// GET route to fetch contacts (for admin or testing)
 app.get('/api/contact', async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
-    res.status(200).json(contacts);
+    res.json(contacts);
   } catch (err) {
-    console.error('❌ Error fetching contacts:', err);
-    res.status(500).json({ error: 'Failed to fetch contact submissions' });
+    console.error('❌ Fetch error:', err);
+    res.status(500).json({ error: 'Failed to fetch contacts' });
   }
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

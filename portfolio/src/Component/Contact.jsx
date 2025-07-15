@@ -40,12 +40,13 @@ const Contact = () => {
       console.log('📤 Sending data:', payload);
 
       const response = await fetch('https://portfolio-oksl.onrender.com/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  mode: 'cors',
+  body: JSON.stringify(payload)
+});
 
       const result = await response.json();
 
