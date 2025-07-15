@@ -8,7 +8,7 @@ const Contact = require('./models/contact');
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
 
 const allowedOrigins = [
   'http://localhost:5173',
