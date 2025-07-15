@@ -24,7 +24,7 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('https://portfolio-0wi9.onrender.com/api/contact', {
+      const response = await fetch('https://portfolio-9063.onrender.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
