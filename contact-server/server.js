@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const Contact = require('./models/Contact');
+const Contact = require('./models/contact');
 const app = express();
 
 const allowedOrigins = [
