@@ -5,8 +5,8 @@ import './Contact.css';
 const Contact = () => {
   const formRef = useRef();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    user_name: '',
+    user_email: '',
     message: '',
   });
 
@@ -21,33 +21,44 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { user_name, user_email, message } = formData;
+    if (!user_name || !user_email || !message) {
+      alert('Please fill in all fields');
+      return;
+    }
+
     setLoading(true);
 
     try {
+      const payload = {
+        name: user_name,
+        email: user_email,
+        message: message
+      };
+
+      console.log('📤 Sending data:', payload);
+
       const response = await fetch('https://portfolio-oksl.onrender.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim()
-        })
+        body: JSON.stringify(payload)
       });
 
-      const data = await response.json();
-      console.log('🔁 Backend response:', data);
+      const result = await response.json();
 
       if (response.ok) {
-        alert('Message sent successfully!');
-        formRef.current?.reset(); // Reset the form
-        setFormData({ name: '', email: '', message: '' });
+        alert('✅ Message sent successfully!');
+        formRef.current.reset();
+        setFormData({ user_name: '', user_email: '', message: '' });
       } else {
-        alert(`❌ Failed to send message: ${data.error || 'Please try again.'}`);
+        console.error('❌ Server responded with error:', result);
+        alert(result.error || '❌ Failed to send message. Please try again.');
       }
     } catch (error) {
-      console.error('❌ Network or server error:', error);
+      console.error('❌ Network error:', error);
       alert('Something went wrong. Please try again.');
     }
 
@@ -63,17 +74,17 @@ const Contact = () => {
         <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
           <input
             type="text"
-            name="name"
+            name="user_name"
             placeholder="Your Name"
-            value={formData.name}
+            value={formData.user_name}
             onChange={handleChange}
             required
           />
           <input
             type="email"
-            name="email"
+            name="user_email"
             placeholder="Your Email"
-            value={formData.email}
+            value={formData.user_email}
             onChange={handleChange}
             required
           />
@@ -90,7 +101,7 @@ const Contact = () => {
           </button>
         </form>
 
-        {/* Social Media Links */}
+        {/* Social Media */}
         <div className="social-links">
           <h3>Connect with me</h3>
           <div className="social-icons">
