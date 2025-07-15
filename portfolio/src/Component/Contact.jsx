@@ -39,7 +39,7 @@ const Contact = () => {
 
       console.log('📤 Sending data:', payload);
 
-      const response = await fetch('https://portfolio-oksl.onrender.com/api/contact', {
+      const response = await fetch('https://portfolio-h6a2.onrender.com/api/contact', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
