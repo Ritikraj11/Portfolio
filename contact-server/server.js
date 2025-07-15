@@ -44,21 +44,27 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Contact API
 app.post('/api/contact', async (req, res) => {
-  const { name, email, message } = req.body;
-  if (!name || !email || !message) {
-    return res.status(400).json({ error: 'All fields are required' });
-  }
-
   try {
+    const { name, email, message } = req.body;
+
+    console.log('📥 Received POST:', req.body); // <== ADD THIS
+
+    if (!name || !email || !message) {
+      console.log('❌ Missing field(s)');
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
     const contact = new Contact({ name, email, message });
-    await contact.save();
-    console.log('✅ Contact saved');
+    const saved = await contact.save();
+    console.log('✅ Saved to MongoDB:', saved); // <== ADD THIS
+
     res.status(200).json({ message: 'Message received' });
   } catch (err) {
-    console.error('❌ Failed to save contact:', err);
+    console.error('❌ Error saving message:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 // Optional GET endpoint to test
 app.get('/', (req, res) => {
