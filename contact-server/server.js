@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 }).then(() => console.log('✅ Connected to MongoDB'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Contact API
+// Contact POST API
 app.post('/api/contact', async (req, res) => {
     try {
         const { name, email, message } = req.body;
@@ -34,6 +34,17 @@ app.post('/api/contact', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// ✅ Contact GET API - View all submissions
+app.get('/api/contact', async (req, res) => {
+    try {
+        const contacts = await Contact.find().sort({ createdAt: -1 }); // latest first
+        res.status(200).json(contacts);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch contact submissions' });
     }
 });
 
