@@ -50,21 +50,25 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
-    console.log('📩 Contact Submission:', req.body);
+
+    console.log('📩 Contact form received:', { name, email, message }); // ✅ Add this
 
     if (!name || !email || !message) {
+      console.log('❌ Missing fields');
       return res.status(400).json({ error: 'All fields are required' });
     }
 
     const contact = new Contact({ name, email, message });
     await contact.save();
+    console.log('✅ Saved to MongoDB');
 
     res.status(200).json({ message: 'Contact form submitted successfully' });
   } catch (err) {
-    console.error('❌ Error saving contact:', err);
+    console.error('❌ Server error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 // ✅ GET: Fetch all contacts
 app.get('/api/contact', async (req, res) => {

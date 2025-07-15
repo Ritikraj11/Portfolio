@@ -5,8 +5,8 @@ import './Contact.css';
 const Contact = () => {
   const formRef = useRef();
   const [formData, setFormData] = useState({
-    user_name: '',
-    user_email: '',
+    name: '',
+    email: '',
     message: '',
   });
 
@@ -30,21 +30,24 @@ const Contact = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: formData.user_name,
-          email: formData.user_email,
-          message: formData.message
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim()
         })
       });
 
+      const data = await response.json();
+      console.log('🔁 Backend response:', data);
+
       if (response.ok) {
         alert('Message sent successfully!');
-        formRef.current.reset();
-        setFormData({ user_name: '', user_email: '', message: '' });
+        formRef.current?.reset(); // Reset the form
+        setFormData({ name: '', email: '', message: '' });
       } else {
-        alert('Failed to send message. Please try again.');
+        alert(`❌ Failed to send message: ${data.error || 'Please try again.'}`);
       }
     } catch (error) {
-      console.error(error);
+      console.error('❌ Network or server error:', error);
       alert('Something went wrong. Please try again.');
     }
 
@@ -60,17 +63,17 @@ const Contact = () => {
         <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
           <input
             type="text"
-            name="user_name"
+            name="name"
             placeholder="Your Name"
-            value={formData.user_name}
+            value={formData.name}
             onChange={handleChange}
             required
           />
           <input
             type="email"
-            name="user_email"
+            name="email"
             placeholder="Your Email"
-            value={formData.user_email}
+            value={formData.email}
             onChange={handleChange}
             required
           />
@@ -87,7 +90,7 @@ const Contact = () => {
           </button>
         </form>
 
-        {/* Social Media */}
+        {/* Social Media Links */}
         <div className="social-links">
           <h3>Connect with me</h3>
           <div className="social-icons">
