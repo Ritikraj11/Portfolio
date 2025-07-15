@@ -9,6 +9,17 @@ const Contact = require('./models/contact');
 const app = express();
 
 app.use(cors());
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app/'
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
