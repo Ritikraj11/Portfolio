@@ -1,26 +1,54 @@
-import { useRef } from 'react';
-import emailjs from '@emailjs/browser';
+import { useRef, useState } from 'react';
 import { FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import './Contact.css';
 
 const Contact = () => {
   const formRef = useRef();
+  const [formData, setFormData] = useState({
+    user_name: '',
+    user_email: '',
+    message: '',
+  });
 
-  const sendEmail = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    emailjs
-      .sendForm('service_8la0w88', 'template_qsaeh7i', formRef.current, 'Wjlrb53Ggl3sqB6CE')
-      .then(
-        (result) => {
-          alert('Message sent successfully!');
-          formRef.current.reset();
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
         },
-        (error) => {
-          alert('Failed to send message. Please try again.');
-          console.error(error.text);
-        }
-      );
+        body: JSON.stringify({
+          name: formData.user_name,
+          email: formData.user_email,
+          message: formData.message
+        })
+      });
+
+      if (response.ok) {
+        alert('Message sent successfully!');
+        formRef.current.reset();
+        setFormData({ user_name: '', user_email: '', message: '' });
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Something went wrong. Please try again.');
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -29,11 +57,34 @@ const Contact = () => {
 
       <div className="contact-container">
         {/* Contact Form */}
-        <form ref={formRef} className="contact-form" onSubmit={sendEmail}>
-          <input type="text" name="user_name" placeholder="Your Name" required />
-          <input type="email" name="user_email" placeholder="Your Email" required />
-          <textarea name="message" rows="5" placeholder="Your Message or Suggestion" required></textarea>
-          <button type="submit">Send Message</button>
+        <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="user_name"
+            placeholder="Your Name"
+            value={formData.user_name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="user_email"
+            placeholder="Your Email"
+            value={formData.user_email}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="message"
+            rows="5"
+            placeholder="Your Message or Suggestion"
+            value={formData.message}
+            onChange={handleChange}
+            required
+          ></textarea>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Sending...' : 'Send Message'}
+          </button>
         </form>
 
         {/* Social Media */}
