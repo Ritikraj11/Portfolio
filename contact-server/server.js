@@ -8,23 +8,29 @@ const Contact = require('./models/contact');
 
 const app = express();
 
+// ✅ Whitelist local and Vercel frontend
 const allowedOrigins = [
   'http://localhost:5173',
   'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app'
 ];
 
+// ✅ CORS setup to handle undefined origins (e.g. Vercel SSR/proxy)
 app.use((req, res, next) => {
-  console.log('Origin:', req.headers.origin);
+  console.log('🌐 Incoming Origin:', req.headers.origin);
   next();
 });
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+    if (!origin) {
+      console.log('⚠️ No origin (likely same-origin or server-side)');
+      return callback(null, true);
+    }
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     } else {
-      console.log('❌ Blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
+      console.log('❌ Blocked Origin:', origin);
+      return callback(new Error('Not allowed by CORS'));
     }
   },
   methods: ['GET', 'POST'],
@@ -33,16 +39,18 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
+// ✅ MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('✅ Connected to MongoDB'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
+// ✅ POST: Save contact form
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, message } = req.body;
-    console.log('📨 Received contact form:', req.body);
+    console.log('📩 Contact Submission:', req.body);
 
     if (!name || !email || !message) {
       return res.status(400).json({ error: 'All fields are required' });
@@ -55,6 +63,17 @@ app.post('/api/contact', async (req, res) => {
   } catch (err) {
     console.error('❌ Error saving contact:', err);
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// ✅ GET: Fetch all contacts
+app.get('/api/contact', async (req, res) => {
+  try {
+    const contacts = await Contact.find().sort({ createdAt: -1 });
+    res.status(200).json(contacts);
+  } catch (err) {
+    console.error('❌ Error fetching contacts:', err);
+    res.status(500).json({ error: 'Failed to fetch contact submissions' });
   }
 });
 
