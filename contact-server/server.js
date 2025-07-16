@@ -12,7 +12,8 @@ const allowedOrigins = [
   /\.vercel\.app$/, // All Vercel deployments
   /\.onrender\.com$/, // Your Render backend
   'https://portfolio-h6a2.vercel.app', // Your main Vercel domain
-  'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app' // Specific deployment
+  'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app', // Specific deployment
+  "https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app/#contact",
 ];
 
 app.use((req, res, next) => {
