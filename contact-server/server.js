@@ -6,28 +6,33 @@ require('dotenv').config();
 const Contact = require('./models/contact');
 const app = express();
 
-// Simplified CORS configuration
-app.use(cors({
+// Configure CORS properly
+const corsOptions = {
   origin: [
     'http://localhost:5173',
-    'https://portfolio-h6a2.vercel.app',
+    'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app',
+    'https://portfolio-oksl.onrender.com',
     /\.vercel\.app$/,
     /\.onrender\.com$/
   ],
   methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
   credentials: true
-}));
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions)); // Enable preflight for all routes
 
 // Middleware
 app.use(express.json());
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('✅ Connected to MongoDB'))
-  .catch(err => {
-    console.error('❌ MongoDB connection error:', err);
-    process.exit(1);
-  });
+  .then(() => console.log('✅ MongoDB Connected'))
+  .catch(err => console.error('❌ MongoDB Error:', err));
 
 // Routes
 app.post('/api/contact', async (req, res) => {
@@ -35,25 +40,16 @@ app.post('/api/contact', async (req, res) => {
     const { name, email, message } = req.body;
     
     if (!name || !email || !message) {
-      return res.status(400).json({ error: 'All fields are required' });
+      return res.status(400).json({ error: 'All fields required' });
     }
 
-    const contact = new Contact({ name, email, message });
-    await contact.save();
+    const newContact = new Contact({ name, email, message });
+    await newContact.save();
     
-    res.status(201).json({ message: 'Message stored successfully' });
+    res.status(201).json({ message: 'Message sent successfully' });
   } catch (err) {
-    console.error('Error:', err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-
-app.get('/api/contact', async (req, res) => {
-  try {
-    const contacts = await Contact.find().sort({ createdAt: -1 });
-    res.json(contacts);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch contacts' });
+    console.error('Server Error:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -62,13 +58,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something broke!' });
-});
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
