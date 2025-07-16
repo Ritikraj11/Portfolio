@@ -10,7 +10,8 @@ const app = express();
 
 // Security Middleware
 app.use(helmet());
-
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 // CORS Configuration
 const allowedOrigins = [
   'http://localhost:5173',

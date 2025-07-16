@@ -19,52 +19,50 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    const { user_name, user_email, message } = formData;
-    if (!user_name || !user_email || !message) {
-      alert('Please fill in all fields');
-      return;
+  try {
+    const payload = {
+      name: formData.user_name,
+      email: formData.user_email,
+      message: formData.message
+    };
+
+    console.log('Submitting:', payload);
+
+    const response = await fetch('https://portfolio-oksl.onrender.com/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    console.log('Response status:', response.status);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Server error:', errorData);
+      throw new Error(errorData.error || 'Failed to send message');
     }
 
-    setLoading(true);
+    const result = await response.json();
+    console.log('Success:', result);
+    
+    alert('Message sent successfully!');
+    formRef.current.reset();
+    setFormData({ user_name: '', user_email: '', message: '' });
 
-    try {
-      const payload = {
-        name: user_name,
-        email: user_email,
-        message: message
-      };
-
-      console.log('📤 Sending data:', payload);
-
-      const response = await fetch('https://portfolio-h6a2.onrender.com/api/contact', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  mode: 'cors',
-  body: JSON.stringify(payload)
-});
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert('✅ Message sent successfully!');
-        formRef.current.reset();
-        setFormData({ user_name: '', user_email: '', message: '' });
-      } else {
-        console.error('❌ Server responded with error:', result);
-        alert(result.error || '❌ Failed to send message. Please try again.');
-      }
-    } catch (error) {
-      console.error('❌ Network error:', error);
-      alert('Something went wrong. Please try again.');
-    }
-
+  } catch (error) {
+    console.error('Error:', error);
+    alert(error.message || 'Something went wrong. Please try again.');
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   return (
     <section className="contact-section">
