@@ -38,6 +38,13 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Enable preflight
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true');
+  console.log('🛰️ Incoming request:');
+  console.log('Method:', req.method);
+  console.log('Path:', req.path);
+  console.log('Origin header:', req.headers.origin);
+  console.log('Content-Type:', req.headers['content-type']);
+  console.log('Body:', req.body);
+
   next();
 });
 
