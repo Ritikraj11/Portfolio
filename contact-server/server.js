@@ -1,169 +1,172 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 require('dotenv').config();
 
 const Contact = require('./models/contact');
+
+// Initialize Express app
 const app = express();
 
-// Enhanced CORS configuration
-const allowedOrigins = [
-  'http://localhost:5173', // Local development
-  /\.vercel\.app$/, // All Vercel deployments
-  /\.onrender\.com$/, // Your Render backend
-  'https://portfolio-h6a2.vercel.app', // Your main Vercel domain
-  'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app' // Specific deployment
-];
+// 1) GLOBAL MIDDLEWARES
 
-// Improved CORS middleware with better logging
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  console.log('🌐 Incoming Request:', {
-    method: req.method,
-    path: req.path,
-    origin: origin || 'No origin header'
-  });
-  next();
-});
+// Security HTTP headers
+app.use(helmet());
+
+// Implement CORS
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://portfolio-9jdyf1n3k-ritikraj11s-projects.vercel.app',
+  'https://portfolio-oksl.onrender.com',
+  /\.vercel\.app$/,
+  /\.onrender\.com$/
+];
 
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    // Check against allowed origins
-    const isAllowed = allowedOrigins.some(allowed => {
-      if (typeof allowed === 'string') {
-        return origin === allowed;
-      } else if (allowed instanceof RegExp) {
-        return allowed.test(origin);
-      }
+    if (allowedOrigins.some(allowed => {
+      if (typeof allowed === 'string') return origin === allowed;
+      if (allowed instanceof RegExp) return allowed.test(origin);
       return false;
-    });
-
-    if (isAllowed) {
-      console.log(`✅ Allowed origin: ${origin}`);
+    })) {
       return callback(null, true);
-    } else {
-      console.log(`❌ Blocked origin: ${origin}`);
-      return callback(new Error('Not allowed by CORS'));
     }
+    
+    const msg = `The CORS policy for this site does not allow access from ${origin}`;
+    return callback(new Error(msg), false);
   },
-  methods: ['GET', 'POST', 'OPTIONS', 'HEAD'],
+  methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
 
 // Handle preflight requests
 app.options('*', cors());
 
-app.use(bodyParser.json());
+// Rate limiting
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  message: 'Too many requests from this IP, please try again in 15 minutes'
+});
+app.use('/api', limiter);
 
-// Connect to MongoDB with better error handling
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-    console.log('✅ Connected to MongoDB');
-  } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
-    process.exit(1); // Exit process with failure
-  }
-};
-connectDB();
+// Body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
 
-// POST: Save contact form with enhanced validation
-app.post('/api/contact', async (req, res) => {
+// Data sanitization against NoSQL query injection
+app.use(mongoSanitize());
+
+// Data sanitization against XSS
+app.use(xss());
+
+// Prevent parameter pollution
+app.use(hpp());
+
+// 2) DATABASE CONNECTION
+const DB = process.env.MONGODB_URI.replace(
+  '<PASSWORD>',
+  process.env.MONGODB_PASSWORD
+);
+
+mongoose.connect(DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  autoIndex: true
+}).then(() => console.log('✅ MongoDB connection successful'));
+
+// 3) ROUTES
+app.post('/api/contact', async (req, res, next) => {
   try {
-    console.log('📩 Request Body:', req.body);
     const { name, email, message } = req.body;
-
+    
     // Validate input
     if (!name || !email || !message) {
-      console.log('⚠️ Missing fields');
-      return res.status(400).json({ 
-        error: 'All fields are required',
-        received: { name, email, message }
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Please provide name, email, and message'
       });
     }
 
     // Validate email format
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return res.status(400).json({ error: 'Invalid email format' });
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Please provide a valid email address'
+      });
     }
 
-    const contact = new Contact({ name, email, message });
-    await contact.save();
-
-    console.log('✅ Contact saved:', { name, email });
-    res.status(201).json({ 
-      message: 'Message stored successfully',
-      data: { name, email }
-    });
-  } catch (err) {
-    console.error('❌ Server Error:', err);
-    res.status(500).json({ 
-      error: 'Server error',
-      details: err.message 
-    });
-  }
-});
-
-// GET: View all messages with pagination
-app.get('/api/contact', async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const skip = (page - 1) * limit;
-
-    const contacts = await Contact.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
-
-    const total = await Contact.countDocuments();
-
-    res.json({
-      data: contacts,
-      meta: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
+    const newContact = await Contact.create({ name, email, message });
+    
+    res.status(201).json({
+      status: 'success',
+      data: {
+        contact: newContact
       }
     });
   } catch (err) {
-    res.status(500).json({ 
-      error: 'Failed to fetch contacts',
-      details: err.message 
-    });
+    next(err);
   }
 });
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    dbState: mongoose.connection.readyState,
-    timestamp: new Date().toISOString()
-  });
+app.get('/api/contact', async (req, res, next) => {
+  try {
+    const contacts = await Contact.find().sort({ createdAt: -1 });
+    
+    res.status(200).json({
+      status: 'success',
+      results: contacts.length,
+      data: {
+        contacts
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
-// Error handling middleware
+// 4) ERROR HANDLING MIDDLEWARE
 app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
+
   console.error('🔥 Error:', err);
-  res.status(err.status || 500).json({
-    error: err.message || 'Internal Server Error',
+
+  res.status(err.statusCode).json({
+    status: err.status,
+    message: err.message,
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
   });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log('🔧 Environment:', process.env.NODE_ENV || 'development');
-  console.log('🔄 Allowed Origins:', allowedOrigins);
+// 5) SERVER
+const port = process.env.PORT || 5000;
+const server = app.listen(port, () => {
+  console.log(`🚀 Server running on port ${port}`);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', err => {
+  console.error('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.error(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', err => {
+  console.error('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  console.error(err.name, err.message);
+  process.exit(1);
 });
