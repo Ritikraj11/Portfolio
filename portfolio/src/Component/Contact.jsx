@@ -22,6 +22,8 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log("📨 handleSubmit called with:", formData);
+    console.log("📤 Sending POST request...");
 
     try {
       const response = await fetch('https://portfolio-h6a2.onrender.com/api/contact', {
