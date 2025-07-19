@@ -19,42 +19,40 @@ const Contact = () => {
     }));
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const response = await fetch('https://portfolio-h6a2.onrender.com/api/contact', {
+    try {
+      const response = await fetch('https://portfolio-h6a2.onrender.com/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.user_name,
+          email: formData.user_email,
+          message: formData.message
+        })
+      });
 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include', // Important for CORS with credentials
-      body: JSON.stringify({
-        name: formData.user_name,
-        email: formData.user_email,
-        message: formData.message
-      })
-    });
+      const result = await response.json();
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to send message');
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+
+      alert('✅ Message sent successfully!');
+      formRef.current.reset();
+      setFormData({ user_name: '', user_email: '', message: '' });
+    } catch (error) {
+      console.error('❌ Submission error:', error);
+      alert(error.message || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const result = await response.json();
-    alert('Message sent successfully!');
-    formRef.current.reset();
-    setFormData({ user_name: '', user_email: '', message: '' });
-  } catch (error) {
-    console.error('Submission error:', error);
-    alert(error.message || 'Something went wrong. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
   return (
     <section className="contact-section">
       <h2>Contact Me</h2>
