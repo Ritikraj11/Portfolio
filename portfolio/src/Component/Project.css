@@ -1,6 +1,11 @@
 .projects-section {
   padding: 4rem 2rem;
-  background: #f8f9fa;
+  background: linear-gradient(
+    90deg,
+    rgba(128, 49, 130, 0.69) 0%,
+    rgba(101, 28, 173, 0.556) 50%,
+    rgba(56, 189, 248, 0.03) 100%
+  );
   text-align: center;
 }
 
