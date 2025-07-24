@@ -1,5 +1,5 @@
 import React from 'react';
-import './MyServices.css';
+import './Myservices.css';
 import { FaLaptopCode, FaLayerGroup, FaProjectDiagram } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
