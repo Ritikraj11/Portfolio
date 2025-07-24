@@ -1,31 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .hero {
-  background-color: #0f172a;
-  color: #f1f5f9;
-  padding: 60px 20px 40px;
-  min-height: auto;
+  width: 100%;
+  min-height: 100vh;         /* Full height */
+  padding: 80px 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
-  z-index: 1;
-  font-family: 'Poppins', sans-serif;
+  background-color: transparent;
 }
 
 .hero-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 60px;
-  max-width: 1200px;
-  margin: auto;
+  gap: 40px;
   position: relative;
   z-index: 2;
 }
-
 .hero-text {
   flex: 1;
   min-width: 300px;
@@ -57,6 +56,13 @@
   white-space: nowrap;
 }
 
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
 .hero-button {
   display: inline-block;
   background-color: #38bdf8;
@@ -72,6 +78,15 @@
   background-color: #0ea5e9;
 }
 
+.hire-button {
+  background-color: #facc15;
+  color: #0f172a;
+}
+
+.hire-button:hover {
+  background-color: #eab308;
+}
+
 .hero-image {
   flex: 1;
   display: flex;
@@ -83,7 +98,7 @@
   height: 280px;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px solid #38bdf8;
+  border: 4px solid #3712f0;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -94,26 +109,41 @@
     text-align: center;
   }
 
+  .hero-text {
+    align-items: center;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-button {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+
   .hero-text h1 {
     font-size: 2.4rem;
   }
 
   .hero-image img {
     margin-bottom: 20px;
+    width: 200px;
+    height: 200px;
   }
 }
+
+/* 🌊 Background wave */
 .tech-wave {
   position: absolute;
   top: 0;
   left: -100%;
   width: 300%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(128, 49, 130, 0.69) 0%,
-    rgba(101, 28, 173, 0.556) 50%,
-    rgba(56, 189, 248, 0.03) 100%
-  );
+  background: transparent;
   background-size: 200% 100%;
   animation: waveMove 30s linear infinite;
   z-index: 0;
@@ -128,7 +158,7 @@
   }
 }
 
-/* 🫧 Floating Bubble Background Animation */
+/* 🫧 Bubble Background */
 .bubbles {
   position: absolute;
   top: 0;
@@ -146,22 +176,22 @@
   list-style: none;
   width: 20px;
   height: 20px;
-  background: rgba(49, 125, 230, 0.84); /* sky blue transparent */
+  background: rgba(49, 125, 230, 0.84);
   animation: bubble-float 20s linear infinite;
   bottom: -120px;
   border-radius: 50%;
 }
 
-.bubbles li:nth-child(1)  { left: 10%;  width: 15px; height: 15px; animation-duration: 22s; }
-.bubbles li:nth-child(2)  { left: 20%;  width: 25px; height: 25px; animation-duration: 18s; }
-.bubbles li:nth-child(3)  { left: 25%;  width: 10px; height: 10px; animation-duration: 20s; }
-.bubbles li:nth-child(4)  { left: 40%;  width: 20px; height: 20px; animation-duration: 25s; }
-.bubbles li:nth-child(5)  { left: 55%;  width: 18px; height: 18px; animation-duration: 17s; }
-.bubbles li:nth-child(6)  { left: 70%;  width: 22px; height: 22px; animation-duration: 19s; }
-.bubbles li:nth-child(7)  { left: 80%;  width: 12px; height: 12px; animation-duration: 23s; }
-.bubbles li:nth-child(8)  { left: 90%;  width: 30px; height: 30px; animation-duration: 21s; }
-.bubbles li:nth-child(9)  { left: 15%;  width: 16px; height: 16px; animation-duration: 24s; }
-.bubbles li:nth-child(10) { left: 65%;  width: 14px; height: 14px; animation-duration: 22s; }
+.bubbles li:nth-child(1) { left: 10%; width: 15px; height: 15px; animation-duration: 22s; }
+.bubbles li:nth-child(2) { left: 20%; width: 25px; height: 25px; animation-duration: 18s; }
+.bubbles li:nth-child(3) { left: 25%; width: 10px; height: 10px; animation-duration: 20s; }
+.bubbles li:nth-child(4) { left: 40%; width: 20px; height: 20px; animation-duration: 25s; }
+.bubbles li:nth-child(5) { left: 55%; width: 18px; height: 18px; animation-duration: 17s; }
+.bubbles li:nth-child(6) { left: 70%; width: 22px; height: 22px; animation-duration: 19s; }
+.bubbles li:nth-child(7) { left: 80%; width: 12px; height: 12px; animation-duration: 23s; }
+.bubbles li:nth-child(8) { left: 90%; width: 30px; height: 30px; animation-duration: 21s; }
+.bubbles li:nth-child(9) { left: 15%; width: 16px; height: 16px; animation-duration: 24s; }
+.bubbles li:nth-child(10) { left: 65%; width: 14px; height: 14px; animation-duration: 22s; }
 
 @keyframes bubble-float {
   0% {

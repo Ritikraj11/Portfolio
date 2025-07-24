@@ -2,8 +2,10 @@ import './Hero.css';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Typewriter } from 'react-simple-typewriter';
-import profileImage from '../assets/Ritik Image.png';
-
+import profileImage from '../assets/professional_pic.jpg';
+import Project from './Projects';
+import { FaFilePdf } from 'react-icons/fa';
+import HireMe from './Hireme';
 const Hero = () => {
   return (
     <section className="hero">
@@ -43,14 +45,27 @@ const Hero = () => {
             </h3>
           </div>
 
-          <motion.a
-            href="#projects"
-            className="hero-button"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            View Projects
-          </motion.a>
+         <div className="hero-buttons">
+            <motion.a
+              href="/projects"
+              className="hero-button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View Projects
+            </motion.a>
+
+            {/* Hire Me Button BELOW */}
+            <motion.a
+              href="/Hireme"
+              className="hero-button hire-button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Hire Me
+            </motion.a>
+          </div>
+
         </motion.div>
 
         <motion.div

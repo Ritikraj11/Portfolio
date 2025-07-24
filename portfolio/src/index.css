@@ -2,7 +2,9 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  background-color: #666b70; /* Dark gray background */
+  background:linear-gradient(90deg,
+  #000000,
+  #434343); /* Dark gray background */
   color: #fff; /* Light text color for contrast */
   margin: 0;
 }
@@ -20,8 +22,8 @@ ul {
 }
 
 section {
-  padding: 60px 20px;
-  max-width: 900px;
+  padding: 60px;
+  max-width: 1200px;
   margin: auto;
 }
 

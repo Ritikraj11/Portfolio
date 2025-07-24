@@ -12,13 +12,14 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="nav-container">
-        <h1 className="logo">MyPortfolio</h1>
+        <h1 className="logo">Ritik</h1>
         <nav className={`nav-links ${open ? 'open' : ''}`}>
-          <a href="#home" onClick={closeMenu}>Home</a>
-          <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#tech" onClick={closeMenu}>Skills</a>
-          <a href="#projects" onClick={closeMenu}>Projects</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
+          <a href="/" onClick={closeMenu}>Home</a>
+          <a href="/about" onClick={closeMenu}>About</a>
+          <a href="/tech" onClick={closeMenu}>Skills</a>
+          <a href="/projects" onClick={closeMenu}>Projects</a>
+          <a href="/contact" onClick={closeMenu}>Contact</a>
+          <a href="/hireme" onClick={closeMenu}>Hire Me</a>
         </nav>
         <div className="menu-icon" onClick={toggleMenu}>
           {open ? <FaTimes /> : <FaBars />}

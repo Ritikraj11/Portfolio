@@ -1,0 +1,132 @@
+.footer {
+  background-color: #0f172a;
+  color: #f1f5f9;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 50px 30px;
+  gap: 30px;
+  border-top: 1px solid #1e293b;
+  position: sticky;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-left h3 {
+  font-size: 1.8rem;
+  color: #38bdf8;
+  margin-bottom: 10px;
+}
+
+.footer-left p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.footer-center h4,
+.footer-right h4 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #f8fafc;
+}
+
+.footer-center ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-center ul li {
+  margin-bottom: 8px;
+}
+
+.footer-center ul li a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-center ul li a:hover {
+  color: #38bdf8;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.footer-socials a {
+  font-size: 1.2rem;
+  color: #38bdf8;
+  transition: transform 0.3s;
+}
+
+.footer-socials a:hover {
+  transform: scale(1.2);
+}
+
+.footer-email {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: #38bdf8;
+  color: #0f172a;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.theme-toggle button:hover {
+  background-color: #0ea5e9;
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #38bdf8;
+  color: #0f172a;
+  border: none;
+  border-radius: 50%;
+  padding: 12px;
+  font-size: 18px;
+  display: none;
+  z-index: 1000;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.scroll-to-top:hover {
+  transform: scale(1.1);
+}
+
+.scroll-to-top.show,
+.scroll-to-top:active {
+  display: block;
+}
+
+/* Optional: Light theme overrides */
+.light-theme .footer {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.light-theme .footer a,
+.light-theme .footer p {
+  color: #1e293b;
+}

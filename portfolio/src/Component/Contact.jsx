@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaInstagram, FaLinkedin, FaWhatsapp, FaChevronDown } from 'react-icons/fa';
 import './Contact.css';
 
 const Contact = () => {
@@ -9,8 +9,8 @@ const Contact = () => {
     user_email: '',
     message: '',
   });
-
   const [loading, setLoading] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -22,15 +22,10 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("📨 handleSubmit called with:", formData);
-    console.log("📤 Sending POST request...");
-
     try {
       const response = await fetch('https://portfolio-h6a2.onrender.com/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.user_name,
           email: formData.user_email,
@@ -40,9 +35,7 @@ const Contact = () => {
 
       const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message');
-      }
+      if (!response.ok) throw new Error(result.error || 'Failed to send message');
 
       alert('✅ Message sent successfully!');
       formRef.current.reset();
@@ -55,12 +48,38 @@ const Contact = () => {
     }
   };
 
+  const faqs = [
+    {
+      question: 'What type of projects do you work on?',
+      answer:
+        'I specialize in full-stack web applications using React, Node.js, and modern technologies. I focus on creating responsive, secure, and user-friendly applications.'
+    },
+    {
+      question: 'Are you available for internships?',
+      answer:
+        "Yes! I'm actively seeking internship opportunities where I can contribute to meaningful projects while continuing to learn and grow as a developer."
+    },
+    {
+      question: 'How quickly do you respond?',
+      answer:
+        'I typically respond to emails and messages within 24 hours. For urgent matters, feel free to reach out via WhatsApp for a quicker response.'
+    },
+    {
+      question: 'Do you work remotely?',
+      answer:
+        'Absolutely! I\'m comfortable working remotely and have experience collaborating with distributed teams using modern communication and project management tools.'
+    }
+  ];
+
+  const toggleFAQ = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
   return (
     <section className="contact-section">
-      <h2>Contact Me</h2>
+      <h2 style={{color: "White"}}>Contact Me</h2>
 
       <div className="contact-container">
-        {/* Contact Form */}
         <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -91,7 +110,6 @@ const Contact = () => {
           </button>
         </form>
 
-        {/* Social Media */}
         <div className="social-links">
           <h3>Connect with me</h3>
           <div className="social-icons">
@@ -105,6 +123,35 @@ const Contact = () => {
               <FaInstagram />
             </a>
           </div>
+        </div>
+      </div>
+
+      {/* FAQ Section */}
+      <div className="faq-container">
+        <h2 className="faq-title">Frequently Asked Questions</h2>
+        {faqs.map((faq, i) => (
+          <div key={i} className={`faq-item ${activeIndex === i ? 'active' : ''}`}>
+            <div className="faq-question" onClick={() => toggleFAQ(i)}>
+              <h3>{faq.question}</h3>
+              <FaChevronDown className="chevron" />
+            </div>
+            {activeIndex === i && (
+              <div className="faq-answer">
+                <p>{faq.answer}</p>
+              </div>
+            )}
+          </div>
+        ))}
+
+        <div className="whatsapp-contact">
+          <a
+            href="https://wa.me/917370919305"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="whatsapp-button"
+          >
+            <FaWhatsapp /> Contact me on WhatsApp
+          </a>
         </div>
       </div>
     </section>

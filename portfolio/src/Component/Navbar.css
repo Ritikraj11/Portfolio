@@ -1,12 +1,13 @@
 /* Base Reset */
 .navbar {
-  background-color: white;
+  background-color: transparent;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 999;
   width: 100%;
   transition: background 0.3s ease;
+  height: auto;
 }
 
 .nav-container {
@@ -19,7 +20,7 @@
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: #007bff;
   user-select: none;
@@ -33,7 +34,7 @@
 
 .nav-links a {
   text-decoration: none;
-  color: #333;
+  color: whitesmoke;
   font-weight: 500;
   position: relative;
   transition: color 0.3s;
@@ -78,7 +79,7 @@
     top: 64px;
     left: 0;
     right: 0;
-    background: white;
+    background: rgb(5, 5, 5);
     flex-direction: column;
     align-items: center;
     gap: 16px;
