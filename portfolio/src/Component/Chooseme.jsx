@@ -1,5 +1,5 @@
 import React from 'react';
-import './ChooseMe.css';
+import './Chooseme.css';
 import { motion } from 'framer-motion';
 import { FaBolt, FaBrain, FaCode, FaUsers } from 'react-icons/fa';
 
