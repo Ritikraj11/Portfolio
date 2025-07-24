@@ -1,5 +1,5 @@
 import React from 'react';
-import './HireMe.css';
+import './Hireme.css';
 import { FaEnvelope, FaLinkedin, FaDownload } from 'react-icons/fa';
 
 const HireMe = () => {
