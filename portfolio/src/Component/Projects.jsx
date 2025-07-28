@@ -28,9 +28,9 @@ const allProjects = [
     category: 'Full Stack',
     description: 'React frontend with custom C++ backend and MySQL for user authentication, chat, and posts.',
     techStack: ['React', 'C++', 'MySQL', 'WebSockets'],
-    image: '/images/project3.png',
+    image: './images/Sanskar.png',
     liveLink: '#',
-    githubLink: 'https://github.com/Ritikraj11/SocialMedia-Cpp'
+    githubLink: 'https://github.com/Ritikraj11/sanskar-a-social-media'
   },
   // {
   //   title: 'AI Mood-based Song Recommender',
