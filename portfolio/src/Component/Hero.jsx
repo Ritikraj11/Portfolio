@@ -18,7 +18,7 @@ const Hero = () => {
 
       {/* 🌊 New Left-to-Right Background Effect */}
       <div className="tech-wave"></div>
-
+<div className="hero-wrapper">
       <div className="hero-content">
         <motion.div
           className="hero-text"
@@ -76,6 +76,7 @@ const Hero = () => {
         >
           <img src={profileImage} alt="Profile" />
         </motion.div>
+      </div>
       </div>
     </section>
   );

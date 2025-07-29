@@ -11,7 +11,7 @@ const allProjects = [
     description: 'Responsive college club website with MongoDB, Express, Node.js, and pure JS.',
     techStack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'MongoDB'],
     image: '/images/project1.png',
-    liveLink: 'https://gecm.vercel.app/',
+    liveLink: 'https://gecms.vercel.app/',
     githubLink: '#'
   },
   {
