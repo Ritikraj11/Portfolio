@@ -12,7 +12,7 @@ const allProjects = [
     techStack: ['HTML', 'CSS','React', 'JavaScript', 'Node.js', 'MongoDB'],
     image: '/images/project1.png',
     liveLink: 'https://gecm-smriti.vercel.app/',
-    githubLink: '#'
+    githubLink: 'https://github.com/Ritikraj11/Smriti'
   },
   {
     title: 'Portfolio Website',
