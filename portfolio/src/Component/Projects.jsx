@@ -9,9 +9,9 @@ const allProjects = [
     title: 'Cultural Club Website',
     category: 'Full Stack',
     description: 'Responsive college club website with MongoDB, Express, Node.js, and pure JS.',
-    techStack: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'MongoDB'],
+    techStack: ['HTML', 'CSS','React', 'JavaScript', 'Node.js', 'MongoDB'],
     image: '/images/project1.png',
-    liveLink: 'https://gecms.vercel.app/',
+    liveLink: 'https://gecm-smriti.vercel.app/',
     githubLink: '#'
   },
   {
