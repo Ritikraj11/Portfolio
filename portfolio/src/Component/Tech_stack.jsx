@@ -10,22 +10,25 @@ const currentLearning = [
   'System Design & High Scalability',
   'Docker, GitHub Actions & DevOps',
   'WebSocket & Real-time Communication',
+  'Computer Networks'
 ];
 
 const expertSkills = [
-  'HTML5', 'CSS3', 'JavaScript', 'React', 'C/C++',
+  'HTML5', 'CSS3', 'JavaScript', 'Angular', 'C/C++','React','Typescript','Python'
 ];
 
 const techs = [
   { name: 'HTML5', icon: <FaHtml5 />, color: '#e34c26', level: 90 },
   { name: 'CSS3', icon: <FaCss3Alt />, color: '#264de4', level: 85 },
-  { name: 'JavaScript', icon: <FaJsSquare />, color: '#f0db4f', level: 50 },
-  { name: 'React', icon: <FaReact />, color: '#61dafb', level: 75 },
-  { name: 'Node.js', icon: <FaNodeJs />, color: '#68a063', level: 40 },
+  { name: 'Angular', icon: <FaHtml5 />, color: '#09f8a8', level: 90 },
+  { name: 'JavaScript', icon: <FaJsSquare />, color: '#f0db4f', level: 80 },
+  { name: 'TypeScript', icon: <FaHtml5 />, color: '#faaa96', level: 90 },
+  { name: 'React', icon: <FaReact />, color: '#61dafb', level: 80 },
+  { name: 'Node.js', icon: <FaNodeJs />, color: '#68a063', level: 70 },
   { name: 'Git', icon: <FaGitAlt />, color: '#f1502f', level: 50 },
   { name: 'C', icon: <FaCode />, color: '#00599C', level: 70 },
   { name: 'C++', icon: <FaCode />, color: '#004482', level: 70 },
-  { name: 'Python', icon: <SiPython />, color: '#3776AB', level: 40 },
+  { name: 'Python', icon: <SiPython />, color: '#3776AB', level: 70 },
   { name: 'Linux', icon: <FaLinux />, color: '#333333', level: 40 },
 ];
 

@@ -11,8 +11,8 @@ const About = () => {
     education: (
       <div>
         <p><strong>B.Tech in Computer Science</strong> — AKTU</p>
-        <p>Current CGPA: <strong>8.54</strong> (up to 2nd semester)</p>
-        <p>Relevant Coursework: Data Structures, OS, C++,C</p>
+        <p>Current CGPA: <strong>8.53</strong> (up to 4th semester)</p>
+        <p>Relevant Coursework: Data Structures, OS, C++,C,AI,Algorithms</p>
       </div>
     ),
     experience: (
@@ -24,6 +24,7 @@ const About = () => {
     ),
     interests: (
       <div>
+        <p>🧠 Full Stack Web Development</p>
         <p>🚀 Coding and Competitive Programming</p>
         <p>🎯 Hackathons and Ideathons</p>
         <p>🧠 Exploring AI/ML & building real-world solutions</p>
