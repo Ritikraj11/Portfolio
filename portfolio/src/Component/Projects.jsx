@@ -84,9 +84,11 @@ const Project = () => {
               className="project-card"
               key={project.title}
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
               exit={{ opacity: 0, y: 30 }}
-              transition={{ duration: 0.4 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
             >
               <div className="project-image">
                 <img src={project.image} alt={project.title} />

@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { FaGithub, FaInstagram, FaLinkedin, FaWhatsapp, FaChevronDown } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import './Contact.css';
 
 const Contact = () => {
@@ -79,8 +80,13 @@ const Contact = () => {
     <section className="contact-section">
       <h2 style={{color: "White"}}>Contact Me</h2>
 
+      <div className="decor-frame">
       <div className="contact-container">
-        <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
+        <motion.form ref={formRef} className="contact-form" onSubmit={handleSubmit}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <input
             type="text"
             name="user_name"
@@ -108,9 +114,13 @@ const Contact = () => {
           <button type="submit" disabled={loading}>
             {loading ? 'Sending...' : 'Send Message'}
           </button>
-        </form>
+        </motion.form>
 
-        <div className="social-links">
+        <motion.div className="social-links"
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.12 }}
+        >
           <h3>Connect with me</h3>
           <div className="social-icons">
             <a href="https://github.com/Ritikraj11" target="_blank" rel="noopener noreferrer">
@@ -123,24 +133,28 @@ const Contact = () => {
               <FaInstagram />
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* FAQ Section */}
       <div className="faq-container">
         <h2 className="faq-title">Frequently Asked Questions</h2>
         {faqs.map((faq, i) => (
-          <div key={i} className={`faq-item ${activeIndex === i ? 'active' : ''}`}>
+          <motion.div key={i} className={`faq-item ${activeIndex === i ? 'active' : ''}`}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: i * 0.06 }}
+          >
             <div className="faq-question" onClick={() => toggleFAQ(i)}>
               <h3>{faq.question}</h3>
               <FaChevronDown className="chevron" />
             </div>
             {activeIndex === i && (
-              <div className="faq-answer">
+              <motion.div className="faq-answer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
                 <p>{faq.answer}</p>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         ))}
 
         <div className="whatsapp-contact">
@@ -153,6 +167,9 @@ const Contact = () => {
             <FaWhatsapp /> Contact me on WhatsApp
           </a>
         </div>
+      </div>
+      <span className="corner-mark tl" aria-hidden="true"></span>
+      <span className="corner-mark br" aria-hidden="true"></span>
       </div>
     </section>
   );

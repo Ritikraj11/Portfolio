@@ -76,9 +76,16 @@ const Journey = () => {
   return (
     <section className="journey-section">
       <h2 className="journey-title">My Achievement</h2>
+      <div className="decor-frame">
       <div className="journey-wrapper">
         {journeyData.map((category, i) => (
-          <div className="journey-card static" key={i}>
+          <motion.div className="journey-card static" key={i}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.18 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.45, delay: i * 0.06 }}
+          >
             <h3>{category.title} <span className="entry-count">({category.items.length})</span></h3>
             <button
               className="more-button"
@@ -86,7 +93,7 @@ const Journey = () => {
             >
               {activeCategory === i ? 'Close' : 'More'}
             </button>
-          </div>
+          </motion.div>
         ))}
       </div>
 
@@ -109,6 +116,9 @@ const Journey = () => {
           </ul>
         </motion.div>
       )}
+      </div>
+      <span className="corner-mark tl" aria-hidden="true"></span>
+      <span className="corner-mark br" aria-hidden="true"></span>
     </section>
   );
 };

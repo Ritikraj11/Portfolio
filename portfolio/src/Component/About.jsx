@@ -41,6 +41,7 @@ const About = () => {
         About Me
       </motion.h2>
 
+      <div className="decor-frame">
       <div className="about-content">
         {/* Text Column */}
         <motion.div
@@ -128,6 +129,9 @@ const About = () => {
         >
           <img src={profileImage}alt="Ritik Raj" />
         </motion.div>
+      </div>
+      <span className="corner-mark tl" aria-hidden="true"></span>
+      <span className="corner-mark br" aria-hidden="true"></span>
       </div>
     </section>
   );
