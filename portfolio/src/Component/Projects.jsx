@@ -20,7 +20,7 @@ const allProjects = [
     description: 'Modern personal portfolio using React and backend with Node.js and MongoDB.',
     techStack: ['React', 'Node.js', 'MongoDB', 'CSS'],
     image: '/images/project2.png',
-    liveLink: 'https://portfolio-xi-eight-28.vercel.app/',
+    liveLink: 'https://portfolio-sduo.vercel.app/',
     githubLink: 'https://github.com/Ritikraj11/Portfolio'
   },
   {
