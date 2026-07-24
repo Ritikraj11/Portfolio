@@ -16,7 +16,7 @@ const allProjects = [
   },
   {
     title: 'Portfolio Website',
-    category: 'Frontend',
+    category: ['Frontend','Full Stack'],
     description: 'Modern personal portfolio using React and backend with Node.js and MongoDB.',
     techStack: ['React', 'Node.js', 'MongoDB', 'CSS'],
     image: '/images/project2.png',
