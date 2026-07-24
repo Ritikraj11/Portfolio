@@ -1,4 +1,10 @@
+const dns = require('dns');
+
+// Force Node.js to use Google DNS for MongoDB SRV lookup
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -52,15 +58,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB connected successfully'))
-.catch(err => {
-  console.error('❌ MongoDB connection error:', err);
-  process.exit(1);
-});
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('✅ MongoDB connected successfully');
+    console.log('📁 Database:', mongoose.connection.name);
+  })
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1);
+  });
 
 // ✅ POST /api/contact
 app.post('/api/contact', async (req, res) => {
