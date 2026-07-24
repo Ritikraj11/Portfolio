@@ -16,7 +16,7 @@ const HireMe = () => {
           <div className="hireme-details">
             <p><strong>📧 Email:</strong> ritik737091@gmail.com</p>
             <p><strong>📍 Location:</strong> India (Remote/On-site)</p>
-            <p><strong>🎓 Education:</strong> B.Tech in CSE, 8.54 CGPA (2th sem)</p>
+            <p><strong>🎓 Education:</strong> B.Tech in CSE, 8.53 CGPA (4th sem)</p>
           </div>
 
           <div className="hireme-buttons">

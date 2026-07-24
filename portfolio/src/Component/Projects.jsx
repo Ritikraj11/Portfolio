@@ -32,6 +32,27 @@ const allProjects = [
     liveLink: '#',
     githubLink: 'https://github.com/Ritikraj11/sanskar-a-social-media'
   },
+  {
+    title: 'Animal Image Classification Model',
+    category: 'AI/ML',
+    description: 'A Machine Learning Project for Different Animal Image Classification Using Python and Different Python Libraries',
+    techStack: ['Python',
+      'numpy',
+      'pandas',
+      'matplotlib',
+      'jupyterlab',
+      'librosa',
+      'soundfile',
+      'scipy',
+      'torch',
+      'transformers',
+      'datasets',
+      'huggingface_hub'
+    ],
+    image: './images/ImgClassifier.png',
+    liveLink: '#',
+    githubLink: 'https://github.com/Ritikraj11/ImageClassifier  '
+  },
   // {
   //   title: 'AI Mood-based Song Recommender',
   //   category: 'AI/ML',
