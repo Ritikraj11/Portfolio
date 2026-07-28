@@ -42,7 +42,7 @@ function App() {
   return (
     <>
       <LoadingSplash />
-      <Chatbot />
+      {/* <Chatbot /> */}
       <Routes>
         <Route path="/" element={<Home darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/about" element={<><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><About /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
