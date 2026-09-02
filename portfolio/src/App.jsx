@@ -13,7 +13,6 @@ import MyServices from './Component/Myservices';
 import Footer from './Component/Footer';
 import Hireme from './Component/Hireme';
 import LoadingSplash from './Component/LoadingSplash';
-import Chatbot from './Component/Chatbot';
 
 const Home = ({ darkMode, setDarkMode }) => (
   <div className={darkMode ? 'dark-theme' : 'light-theme'}>
@@ -42,7 +41,6 @@ function App() {
   return (
     <>
       <LoadingSplash />
-      {/* <Chatbot /> */}
       <Routes>
         <Route path="/" element={<Home darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/about" element={<><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><About /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />

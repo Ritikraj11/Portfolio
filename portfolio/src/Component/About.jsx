@@ -111,7 +111,7 @@ const About = () => {
               </div>
             </motion.div>
           <a
-            href="/Riitik_Raj_Resume_OG.pdf"
+            href="/Riitik_Raj_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="download-btn"

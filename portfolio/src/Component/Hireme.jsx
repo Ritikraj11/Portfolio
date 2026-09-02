@@ -21,7 +21,7 @@ const HireMe = () => {
 
           <div className="hireme-buttons">
             <a
-              href="/Riitik_Raj_Resume_OG.pdf"
+              href="/Riitik_Raj_Resume.pdf"
               download
               className="hireme-btn"
             >
