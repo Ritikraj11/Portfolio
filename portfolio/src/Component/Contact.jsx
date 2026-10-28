@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { FaGithub, FaInstagram, FaLinkedin, FaWhatsapp, FaChevronDown } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import './Contact.css';
@@ -12,38 +12,98 @@ const Contact = () => {
   });
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [csrfToken, setCsrfToken] = useState('');
+  const [requestCount, setRequestCount] = useState(0);
+
+  // Generate CSRF token
+  useEffect(() => {
+    const generateToken = () => crypto.randomBytes(32).toString('hex');
+    setCsrfToken(generateToken());
+  }, []);
 
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
+    // Reset CSRF on form changes to prevent replay attacks
+    if (requestCount > 0) {
+      setCsrfToken(crypto.randomBytes(32).toString('hex'));
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateInput = () => {
+    const errors = [];
+    if (!formData.user_name || formData.user_name.trim().length < 2) {
+      errors.push('Name must be at least 2 characters');
+    }
+    if (!validateEmail(formData.user_email)) {
+      errors.push('Please provide a valid email');
+    }
+    if (!formData.message || formData.message.trim().length < 10) {
+      errors.push('Message must be at least 10 characters');
+    }
+    return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Form validation
+    const errors = validateInput();
+    if (errors.length > 0) {
+      alert('❌ ' + errors.join('\n'));
+      return;
+    }
+
+    // CSRF protection
+    if (!csrfToken || csrfToken.length === 0) {
+      alert('❌ Security token missing');
+      return;
+    }
+
     setLoading(true);
+    setRequestCount(prev => prev + 1);
+
     try {
       const response = await fetch('https://portfolio-h6a2.onrender.com/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken
+        },
         body: JSON.stringify({
-          name: formData.user_name,
-          email: formData.user_email,
-          message: formData.message
+          name: formData.user_name.trim(),
+          email: formData.user_email.trim().toLowerCase(),
+          message: formData.message.trim()
         })
       });
 
       const result = await response.json();
 
-      if (!response.ok) throw new Error(result.error || 'Failed to send message');
+      if (!response.ok) {
+        if (response.status === 429) {
+          alert('⏱️ Too many requests. Please wait before submitting again.');
+        } else {
+          alert(`❌ Submission failed: ${result.error || 'Unknown error'}`);
+        }
+        return;
+      }
 
       alert('✅ Message sent successfully!');
       formRef.current.reset();
       setFormData({ user_name: '', user_email: '', message: '' });
+      // Generate new CSRF token after successful submission
+      setCsrfToken(crypto.randomBytes(32).toString('hex'));
+      setRequestCount(0);
     } catch (error) {
       console.error('❌ Submission error:', error);
-      alert(error.message || 'Something went wrong. Please try again.');
+      alert('❌ Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
@@ -78,7 +138,7 @@ const Contact = () => {
 
   return (
     <section className="contact-section">
-      <h2 style={{color: "White"}}>Contact Me</h2>
+      <h2>Contact Me</h2>
 
       <div className="decor-frame">
       <div className="contact-container">
@@ -94,6 +154,8 @@ const Contact = () => {
             value={formData.user_name}
             onChange={handleChange}
             required
+            minLength={2}
+            maxLength={200}
           />
           <input
             type="email"
@@ -102,6 +164,7 @@ const Contact = () => {
             value={formData.user_email}
             onChange={handleChange}
             required
+            maxLength={254}
           />
           <textarea
             name="message"
@@ -110,7 +173,10 @@ const Contact = () => {
             value={formData.message}
             onChange={handleChange}
             required
+            minLength={10}
+            maxLength={1000}
           ></textarea>
+          <input type="hidden" name="csrf_token" value={csrfToken} />
           <button type="submit" disabled={loading}>
             {loading ? 'Sending...' : 'Send Message'}
           </button>

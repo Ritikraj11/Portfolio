@@ -1,49 +1,46 @@
 .whatido-panel {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-width: 380px;
 }
 
 .whatido-card {
   position: relative;
-  padding: 20px 22px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border: 1px dashed rgba(255,255,255,0.06);
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(9, 14, 26, 0.85), rgba(2, 6, 23, 0.9));
+  border: 1px solid rgba(0, 82, 255, 0.25);
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+  transition: all 0.3s ease;
 }
 
-.whatido-card h4 {
-  margin: 0 0 8px 0;
-  color: #f8fafc;
-  font-size: 1.12rem;
-}
-
-.whatido-card p {
-  margin: 0;
-  color: #cbd5e1;
-  font-size: 0.92rem;
-  line-height: 1.5;
+.whatido-card:hover {
+  border-color: var(--accent-lime);
+  box-shadow: 0 0 25px rgba(0, 255, 102, 0.2);
+  transform: translateX(6px);
 }
 
 .card-decor {
   position: absolute;
-  right: 12px;
-  top: 12px;
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--accent-2, #38bdf8), var(--accent, #8b5cf6));
-  filter: blur(6px);
-  opacity: 0.95;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent-cobalt), var(--accent-lime));
+  box-shadow: 0 0 10px var(--accent-lime);
 }
 
-@media (max-width: 768px) {
-  .whatido-panel {
-    width: 100%;
-  }
-  .whatido-card {
-    padding: 16px 16px;
-  }
+.whatido-card h4 {
+  font-size: 1.05rem;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.whatido-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
 }

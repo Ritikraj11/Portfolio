@@ -1,122 +1,91 @@
 .splash-screen {
   position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 30%),
-    linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
-  display: grid;
-  place-items: center;
-  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #020617;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
   overflow: hidden;
 }
 
-.splash-screen::before,
-.splash-screen::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(10px);
-  animation: drift 8s ease-in-out infinite alternate;
-}
-
-.splash-screen::before {
-  width: 280px;
-  height: 280px;
-  background: rgba(56, 189, 248, 0.2);
-  top: 8%;
-  left: 10%;
-}
-
-.splash-screen::after {
+.splash-card {
+  text-align: center;
+  position: relative;
   width: 320px;
   height: 320px;
-  background: rgba(244, 114, 182, 0.16);
-  bottom: 2%;
-  right: 8%;
-  animation-duration: 10s;
-}
-
-.splash-card {
-  position: relative;
-  text-align: center;
-  z-index: 1;
-  padding: 2rem;
-  min-width: min(320px, 88vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .splash-ring {
   position: absolute;
-  inset: 0;
-  margin: auto;
-  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 50%;
-  transform: scale(0.9);
+  border: 3px solid transparent;
+  animation: ringRotate 3s linear infinite;
 }
 
 .ring-one {
-  width: 220px;
-  height: 220px;
-  animation: spin 4s linear infinite;
+  width: 280px;
+  height: 280px;
+  border-top-color: var(--accent-cobalt-light);
+  border-right-color: var(--accent-lime);
+  animation-duration: 4s;
 }
 
 .ring-two {
-  width: 260px;
-  height: 260px;
-  border-color: rgba(56, 189, 248, 0.35);
-  animation: spinReverse 5s linear infinite;
+  width: 360px;
+  height: 360px;
+  border-bottom-color: var(--accent-lime);
+  border-left-color: var(--accent-cobalt);
+  animation-duration: 5s;
+  animation-direction: reverse;
 }
 
 .splash-name {
-  font-size: clamp(1.8rem, 4vw, 2.7rem);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #f8fafc;
-  margin-bottom: 0.7rem;
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f8fafc, var(--accent-lime));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
 }
 
 .splash-role {
-  font-size: 0.95rem;
-  color: #cbd5e1;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--accent-cobalt-light);
+  margin-bottom: 24px;
 }
 
 .splash-bar {
-  width: min(240px, 72vw);
-  height: 8px;
-  margin: 1rem auto 0;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.12);
+  width: 220px;
+  height: 6px;
+  background: #0f172a;
+  border-radius: 3px;
   overflow: hidden;
+  margin: 0 auto 12px;
+  border: 1px solid rgba(0, 82, 255, 0.3);
 }
 
 .splash-bar span {
-  display: block;
   height: 100%;
-  background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
-  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent-cobalt), var(--accent-lime));
+  border-radius: 3px;
+  display: block;
+  transition: width 0.2s ease;
 }
 
 .splash-percent {
-  margin-top: 0.7rem;
-  font-size: 0.95rem;
-  color: #e2e8f0;
-  letter-spacing: 0.25em;
+  font-size: 0.9rem;
+  color: var(--accent-cobalt-light);
+  font-weight: 600;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg) scale(0.9); }
-  to { transform: rotate(360deg) scale(0.9); }
-}
-
-@keyframes spinReverse {
-  from { transform: rotate(360deg) scale(0.95); }
-  to { transform: rotate(0deg) scale(0.95); }
-}
-
-@keyframes drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(20px, -18px, 0); }
+@keyframes ringRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -1,57 +1,61 @@
 .services-section {
-  padding: 80px 20px;
-  background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(2,6,23,0.95));
-  color: #f1f5f9;
+  position: relative;
   text-align: center;
-  border-radius: 28px;
-  box-shadow: 0 30px 60px rgba(2,6,23,.22);
 }
 
 .services-title {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-  color: #8b5cf6;
-  font-weight: 600;
+  text-align: center;
 }
 
 .services-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  justify-content: center;
-  max-width: 1200px;
-  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+  margin-top: 40px;
 }
 
 .service-card {
-  background: linear-gradient(135deg, rgba(15,23,42,0.88), rgba(30,41,59,0.9));
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 30px 24px;
-  width: 300px;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 16px 35px rgba(2,6,23,.22);
+  background: linear-gradient(135deg, rgba(9, 14, 26, 0.9), rgba(2, 6, 23, 0.95));
+  border: 1px solid rgba(0, 82, 255, 0.25);
+  border-radius: 16px;
+  padding: 36px 24px;
+  transition: all 0.35s ease;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
 }
 
 .service-card:hover {
+  border-color: var(--accent-lime);
   transform: translateY(-8px);
-  border-color: rgba(56,189,248,.38);
-  box-shadow: 0 24px 44px rgba(2,6,23,.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 102, 0.2);
 }
 
 .service-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-cobalt), #2563eb);
   font-size: 2.4rem;
-  color: #38bdf8;
-  margin-bottom: 18px;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(0, 82, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  box-shadow: 0 0 35px var(--accent-lime);
+  transform: scale(1.08);
 }
 
 .service-card h3 {
   font-size: 1.25rem;
-  margin-bottom: 10px;
-  color: #f8fafc;
+  margin-bottom: 12px;
+  color: var(--text-main);
 }
 
 .service-card p {
-  font-size: 1rem;
-  color: #cbd5e1;
+  font-size: 0.92rem;
+  color: var(--text-muted);
 }
