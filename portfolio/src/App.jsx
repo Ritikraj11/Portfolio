@@ -13,9 +13,11 @@ import MyServices from './Component/Myservices';
 import Footer from './Component/Footer';
 import Hireme from './Component/Hireme';
 import LoadingSplash from './Component/LoadingSplash';
+import WaveBackground from './Component/WaveBackground';
 
 const Home = ({ darkMode, setDarkMode }) => (
   <div className={darkMode ? 'dark-theme' : 'light-theme'}>
+    <WaveBackground />
     <Navbar />
     <motion.main initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
       <section id="home">
@@ -41,13 +43,14 @@ function App() {
   return (
     <>
       <LoadingSplash />
+      <WaveBackground />
       <Routes>
         <Route path="/" element={<Home darkMode={darkMode} setDarkMode={setDarkMode} />} />
-        <Route path="/about" element={<><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><About /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
-        <Route path="/projects" element={<><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><Project /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
-        <Route path="/tech" element={<><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><TechStack /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
-        <Route path="/contact" element={<><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><Contact /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
-        <Route path="/Hireme" element={<><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><Hireme /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
+        <Route path="/about" element={<><WaveBackground /><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><About /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
+        <Route path="/projects" element={<><WaveBackground /><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><Project /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
+        <Route path="/tech" element={<><WaveBackground /><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><TechStack /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
+        <Route path="/contact" element={<><WaveBackground /><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><Contact /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
+        <Route path="/Hireme" element={<><WaveBackground /><Navbar /><motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}><Hireme /></motion.div><Footer setDarkMode={setDarkMode} darkMode={darkMode} /></>} />
       </Routes>
     </>
   );
