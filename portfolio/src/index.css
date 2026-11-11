@@ -1,5 +1,5 @@
 /* ==========================================================
-   PORTFOLIO DESIGN SYSTEM — Midnight Black, Electric Cobalt, Acid Lime
+   PORTFOLIO DESIGN SYSTEM — Charcoal Black, Forest Green, Crimson Red
    ========================================================== */
 :root {
   color-scheme: dark;
@@ -8,19 +8,20 @@
   font-weight: 400;
 
   /* Brand Palette */
-  --bg-midnight: #020617;
-  --bg-card: #090e1a;
-  --bg-card-hover: #0f172a;
+  --bg-charcoal: #0A0A0A;
+  --bg-card: #141414;
+  --bg-card-hover: #1C1C1C;
 
-  --accent-cobalt: #0052FF;
-  --accent-cobalt-light: #38bdf8;
-  --accent-lime: #00ff66;
-  --accent-lime-dim: #10b981;
+  --accent-forest: #1B6B43;
+  --accent-forest-light: #2E8B57;
+  --accent-forest-glow: #3DD68C;
+  --accent-crimson: #DC143C;
+  --accent-crimson-light: #FF4D4D;
 
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --border-glow: rgba(0, 82, 255, 0.35);
-  --lime-glow: rgba(0, 255, 102, 0.4);
+  --text-main: #F5F5F5;
+  --text-muted: #A0A0A0;
+  --border-glow: rgba(27, 107, 67, 0.4);
+  --crimson-glow: rgba(220, 20, 60, 0.4);
 }
 
 html {
@@ -30,11 +31,11 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background-color: var(--bg-midnight);
+  background-color: var(--bg-charcoal);
   background-image:
-    radial-gradient(circle at 15% 15%, rgba(0, 82, 255, 0.18), transparent 28%),
-    radial-gradient(circle at 85% 85%, rgba(0, 255, 102, 0.12), transparent 30%),
-    linear-gradient(135deg, #020617 0%, #060a17 50%, #020308 100%);
+    radial-gradient(circle at 15% 15%, rgba(27, 107, 67, 0.22), transparent 30%),
+    radial-gradient(circle at 85% 85%, rgba(220, 20, 60, 0.14), transparent 32%),
+    linear-gradient(135deg, #0A0A0A 0%, #111111 50%, #0A0A0A 100%);
   color: var(--text-main);
   overflow-x: hidden;
 }
@@ -57,7 +58,7 @@ body::before {
   height: 420px;
   top: -120px;
   left: -140px;
-  background: rgba(0, 82, 255, 0.22);
+  background: rgba(27, 107, 67, 0.28);
 }
 
 body::after {
@@ -65,7 +66,7 @@ body::after {
   height: 480px;
   bottom: -180px;
   right: -140px;
-  background: rgba(0, 255, 102, 0.15);
+  background: rgba(220, 20, 60, 0.18);
   animation-duration: 15s;
 }
 
@@ -107,7 +108,7 @@ h2::after {
   bottom: -8px;
   width: 60px;
   height: 4px;
-  background: linear-gradient(90deg, var(--accent-cobalt), var(--accent-lime));
+  background: linear-gradient(90deg, var(--accent-forest), var(--accent-crimson));
   border-radius: 2px;
 }
 
@@ -130,9 +131,9 @@ p {
   position: relative;
   padding: 32px;
   border-radius: 16px;
-  background: linear-gradient(135deg, rgba(9, 14, 26, 0.8), rgba(2, 6, 23, 0.9));
-  border: 1px solid rgba(0, 82, 255, 0.25);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(0, 255, 102, 0.15);
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.85), rgba(10, 10, 10, 0.95));
+  border: 1px solid rgba(27, 107, 67, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(220, 20, 60, 0.15);
   backdrop-filter: blur(12px);
   overflow: hidden;
 }
@@ -144,15 +145,15 @@ p {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent-cobalt), var(--accent-lime), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent-forest), var(--accent-crimson), transparent);
 }
 
 .corner-mark {
   position: absolute;
   width: 14px;
   height: 14px;
-  border-top: 2px solid var(--accent-lime);
-  border-left: 2px solid var(--accent-cobalt);
+  border-top: 2px solid var(--accent-crimson);
+  border-left: 2px solid var(--accent-forest);
 }
 .corner-mark.tl { top: 8px; left: 8px; }
 .corner-mark.br { bottom: 8px; right: 8px; transform: rotate(180deg); }
